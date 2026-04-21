@@ -6,6 +6,13 @@ VALID_NAMES = ["NormalName", "Русская_Папка", "Name with spaces"]
 
 class TestPositiveAPI:
     
+    def test_get_disk_info_success(self, auth_headers):
+        """Проверка эндпоинта GET /v1/disk/ """
+        url = "https://cloud-api.yandex.net/v1/disk/"
+        response = requests.get(url, headers=auth_headers)
+        assert response.status_code == 200
+        assert "total_space" in response.json()
+
     @pytest.mark.parametrize("folder_name", VALID_NAMES)
     def test_put_create_folder_success(self, base_url, auth_headers, folder_name):
         """Проверка успешного создания папки (PUT) с разными валидными именами."""
@@ -27,7 +34,7 @@ class TestPositiveAPI:
         assert data["type"] == "dir"
 
     def test_post_copy_folder_success(self, base_url, auth_headers, create_test_folder):
-        """Проверка копирования папки (POST). Обязательное условие задания."""
+        """Проверка копирования папки (POST)."""
         original_folder = create_test_folder
         copied_folder = original_folder + "_copy"
         

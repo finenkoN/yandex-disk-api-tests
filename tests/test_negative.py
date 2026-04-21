@@ -39,3 +39,13 @@ class TestNegativeAPI:
         response = requests.get(f"{base_url}?path={folder_name}", headers=auth_headers)
         
         assert response.status_code == 404 # Not Found
+    
+    def test_delete_non_existent_folder_returns_404(self, base_url, auth_headers):
+        """404 Not Found: Попытка удаления несуществующей папки."""
+        response = requests.delete(f"{base_url}?path=non_existent_folder", headers=auth_headers)
+        assert response.status_code == 404
+
+    def test_copy_non_existent_folder_returns_404(self, base_url, auth_headers):
+        """404 Not Found: Попытка копирования из несуществующего источника (POST)."""
+        response = requests.post(f"{base_url}/copy?from=no_source&path=dest", headers=auth_headers)
+        assert response.status_code == 404
