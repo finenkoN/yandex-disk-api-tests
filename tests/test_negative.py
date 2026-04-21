@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-# Неверные имена: пустое, пробелы, со слэшем (нет родительской папки)
+# Неверные имена: пустое, со слэшем (нет родительской папки)
 INVALID_NAMES = [
     ("", 400), 
     ("Parent_Not_Exist/Child", 409)
@@ -11,7 +11,6 @@ class TestNegativeAPI:
     
     def test_unauthorized_request_returns_401(self, base_url):
         """Проверка безопасности: запрос без токена авторизации."""
-        # Отправляем запрос вообще без заголовков
         response = requests.get(f"{base_url}?path=AnyFolder")
         
         assert response.status_code == 401 # Unauthorized
@@ -38,7 +37,7 @@ class TestNegativeAPI:
         
         response = requests.get(f"{base_url}?path={folder_name}", headers=auth_headers)
         
-        assert response.status_code == 404 # Not Found
+        assert response.status_code == 404
     
     def test_delete_non_existent_folder_returns_404(self, base_url, auth_headers):
         """404 Not Found: Попытка удаления несуществующей папки."""

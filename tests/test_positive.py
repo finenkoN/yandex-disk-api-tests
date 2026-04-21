@@ -1,8 +1,8 @@
 import pytest
 import requests
 
-# Проверка имен: обычное, кириллица, с пробелом
-VALID_NAMES = ["NormalName", "Русская_Папка", "Name with spaces"]
+# Проверка имен: латиница, кириллица, с пробелом
+VALID_NAMES = ["Lat_Name", "Русская_Папка", "Name with spaces"]
 
 class TestPositiveAPI:
     
